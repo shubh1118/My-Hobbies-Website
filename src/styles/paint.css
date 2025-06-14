@@ -1,0 +1,351 @@
+.painting-container {
+  max-width: 100%;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.gallery-header h1 {
+  font-size: 3rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-layout {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.horizontal-section,
+.vertical-section {
+  margin-bottom: 3rem;
+}
+
+.horizontal-section h2,
+.vertical-section h2 {
+  color: #2c3e50;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.paintings-horizontal {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 2rem;
+  padding: 0 2rem;
+}
+
+.paintings-scroll {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  justify-content: center;
+}
+
+.paintings-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.paintings-horizontal .painting-card {
+  flex: 0 0 calc(20% - 1.6rem);
+  min-width: 250px;
+  max-width: 300px;
+}
+
+.paintings-horizontal .painting-image-container {
+  height: 250px;
+}
+
+.paintings-horizontal .painting-info {
+  padding: 1.2rem;
+}
+
+.paintings-horizontal .painting-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+}
+
+.paintings-horizontal .painting-info p {
+  font-size: 0.9rem;
+  margin: 0.4rem 0;
+}
+
+.paintings-vertical {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.painting-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.painting-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.painting-image-container {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.paintings-vertical .painting-image-container {
+  height: 300px;
+}
+
+.painting-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.painting-card:hover .painting-image-container img {
+  transform: scale(1.1);
+}
+
+.painting-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.painting-card:hover .painting-overlay {
+  opacity: 1;
+}
+
+.view-details {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border: 2px solid white;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.painting-card:hover .view-details {
+  background: white;
+  color: #2c3e50;
+}
+
+.painting-info {
+  padding: 1.5rem;
+}
+
+.painting-info h3 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.paintings-vertical .painting-info h3 {
+  font-size: 1.3rem;
+}
+
+.painting-info p {
+  margin: 0.5rem 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.paintings-vertical .painting-info p {
+  font-size: 1rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pagination-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  background: #3498db;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.pagination-btn:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideIn 0.3s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #e74c3c;
+}
+
+.modal-body {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.modal-body img {
+  max-width: 60%;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-info {
+  flex: 1;
+}
+
+.modal-info h2 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.modal-info p {
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error {
+  color: #e74c3c;
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 1200px) {
+  .paintings-horizontal .painting-card {
+    flex: 0 0 calc(25% - 1.5rem);
+  }
+}
+
+@media (max-width: 992px) {
+  .paintings-horizontal .painting-card {
+    flex: 0 0 calc(33.333% - 1.33rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .paintings-horizontal .painting-card {
+    flex: 0 0 calc(50% - 1rem);
+  }
+  
+  .paintings-horizontal {
+    padding: 0 1rem;
+  }
+
+  .horizontal-section h2,
+  .vertical-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .paintings-vertical {
+    grid-template-columns: 1fr;
+  }
+}

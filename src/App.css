@@ -1,5 +1,81 @@
+/* Base styles */
 .App {
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 80px; /* Add padding to account for fixed navbar */
+}
+
+/* Responsive container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Responsive typography */
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+p {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+/* Media Queries */
+/* Mobile devices */
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 0 15px;
+  }
+}
+
+/* Tablets */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+/* Laptops and small desktops */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: 0 30px;
+  }
+}
+
+/* Large desktops */
+@media screen and (min-width: 1025px) {
+  .container {
+    padding: 0 40px;
+  }
+}
+
+/* Utility classes */
+.hide-on-mobile {
+  display: none;
+}
+
+@media screen and (min-width: 769px) {
+  .hide-on-mobile {
+    display: block;
+  }
+}
+
+.show-on-mobile {
+  display: block;
+}
+
+@media screen and (min-width: 769px) {
+  .show-on-mobile {
+    display: none;
+  }
 }
 
 .App-logo {
