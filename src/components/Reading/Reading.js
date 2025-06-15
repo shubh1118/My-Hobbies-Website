@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import "../styles/Reading.css";
+import "./Reading.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { FaBookmark, FaBookOpen, FaFilter, FaSpinner } from "react-icons/fa";
+import { FaBookmark, FaBookOpen,FaSpinner } from "react-icons/fa";
 
 const API_BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 const ITEMS_PER_PAGE = 12;
@@ -146,6 +145,25 @@ function Reading() {
     );
   }
 
+  const getPageNumbers = () => {
+    const visiblePages = 5;
+    const pages = [];
+
+    let startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
+    let endPage = startPage + visiblePages - 1;
+
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - visiblePages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  };
+
   if (error) {
     return (
       <div className="reading-container error-container">
@@ -165,13 +183,6 @@ function Reading() {
       <h1 className="page-title">📚 Discover Your Next Read</h1>
 
       <div className="search-filter-section">
-        <button
-          className="filter-toggle"
-          onClick={() => setShowFilters(!showFilters)}
-        >
-          <FaFilter /> {showFilters ? "Hide Filters" : "Show Filters"}
-        </button>
-
         {showFilters && (
           <div className="categories">
             {CATEGORIES.map((category) => (
@@ -234,21 +245,39 @@ function Reading() {
 
       <div className="pagination">
         <button
+          onClick={() => handlePageChange(1)}
+          disabled={currentPage === 1}
+        >
+          &laquo;
+        </button>
+        <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="pagination-btn"
         >
-          Previous
+          &lt;
         </button>
-        <span className="page-info">
-          Page {currentPage} of {totalPages}
-        </span>
+
+        {getPageNumbers().map((page) => (
+          <button
+            key={page}
+            onClick={() => handlePageChange(page)}
+            className={page === currentPage ? "active" : ""}
+          >
+            {page}
+          </button>
+        ))}
+
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="pagination-btn"
         >
-          Next
+          &gt;
+        </button>
+        <button
+          onClick={() => handlePageChange(totalPages)}
+          disabled={currentPage === totalPages}
+        >
+          &raquo;
         </button>
       </div>
 

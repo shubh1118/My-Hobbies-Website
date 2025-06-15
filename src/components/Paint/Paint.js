@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import "../styles/paint.css";
+import "./paint.css";
 import axios from "axios";
 
 const API_BASE_URL = "https://api.artic.edu/api/v1/artworks/search";
@@ -190,6 +190,25 @@ function Painting() {
     return <div className="error">{error}</div>;
   }
 
+  const getPageNumbers = () => {
+    const visiblePages = 5;
+    const pages = [];
+
+    let startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + visiblePages - 1);
+
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - visiblePages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  };
+
   return (
     <div className="painting-container">
       <div className="gallery-header">
@@ -213,23 +232,39 @@ function Painting() {
       {totalPages > 1 && (
         <div className="pagination">
           <button
-            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+            onClick={() => handlePageChange(1)}
             disabled={currentPage === 1}
-            className="pagination-btn"
           >
-            Previous
+            &laquo;
           </button>
-          <span>
-            Page {currentPage} of {totalPages}
-          </span>
           <button
-            onClick={() =>
-              handlePageChange(Math.min(totalPages, currentPage + 1))
-            }
-            disabled={currentPage === totalPages}
-            className="pagination-btn"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
           >
-            Next
+            &lt;
+          </button>
+
+          {getPageNumbers().map((page) => (
+            <button
+              key={page}
+              onClick={() => handlePageChange(page)}
+              className={page === currentPage ? "active" : ""}
+            >
+              {page}
+            </button>
+          ))}
+
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            &gt;
+          </button>
+          <button
+            onClick={() => handlePageChange(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            &raquo;
           </button>
         </div>
       )}

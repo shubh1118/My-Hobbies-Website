@@ -188,31 +188,75 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  margin-top: 2rem;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  margin: 2rem 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0.5rem;
+  scrollbar-width: none;
+  width: 100%;
+  max-width: 600px; /* Adjust width as needed */
+  margin: 0 auto;
 }
 
-.pagination-btn {
-  padding: 0.8rem 1.5rem;
+.pagination::-webkit-scrollbar {
+  display: none;
+}
+.painting-container {
+  box-sizing: border-box;
+  padding: 2rem;
+  width: 100%;
+}
+
+
+.pagination button {
+  background: #f5f5f5;
+  color: #2c3e50;
   border: none;
-  border-radius: 25px;
-  background: #3498db;
-  color: white;
+  padding: 0.6rem 1.2rem;
+  min-width: 40px;
+  border-radius: 50px;
+  font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.pagination-btn:hover:not(:disabled) {
-  background: #2980b9;
+.pagination button:hover:not(:disabled) {
+  background: #3498db;
+  color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.pagination-btn:disabled {
-  background: #bdc3c7;
+.pagination button:disabled {
+  background: #ccc;
+  color: #888;
   cursor: not-allowed;
+  opacity: 0.6;
+}
+@media (max-width: 768px) {
+  .pagination {
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+
+  .pagination button {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    gap: 0.2rem;
+  }
+
+  .pagination button {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.75rem;
+    border-radius: 40px;
+  }
 }
 
 .modal-overlay {
@@ -283,13 +327,23 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
-  from { transform: translateY(-20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .loading-container {
@@ -310,8 +364,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .error {
@@ -337,7 +395,7 @@
   .paintings-horizontal .painting-card {
     flex: 0 0 calc(50% - 1rem);
   }
-  
+
   .paintings-horizontal {
     padding: 0 1rem;
   }
@@ -354,7 +412,7 @@
   .gallery-header {
     margin-bottom: 1.5rem;
   }
-  
+
   .gallery-header h1 {
     margin-bottom: 1rem;
   }
@@ -364,7 +422,7 @@
   .gallery-header {
     margin-bottom: 1rem;
   }
-  
+
   .gallery-header h1 {
     font-size: 2rem;
   }

@@ -33,7 +33,6 @@ body {
   text-align: center;
   position: relative;
   overflow: hidden;
- 
 }
 
 .hero-content {
@@ -160,8 +159,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes fadeInDown {
@@ -195,21 +198,20 @@ body {
   }
 }
 
-
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.2rem;
   }
-  
+
   .sections {
     padding: 2rem 1rem;
     gap: 2rem;
   }
-  
+
   .section-image-container {
     height: 400px;
   }
@@ -223,12 +225,11 @@ body {
   }
 }
 
-
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .sections {
     padding: 30px;
   }
-  
+
   .section-image-container {
     height: clamp(450px, 60vh, 650px);
   }
@@ -238,22 +239,21 @@ body {
   .sections {
     padding: 40px;
   }
-  
+
   .section-image-container {
     height: clamp(500px, 65vh, 800px);
   }
 }
 
-
 @media screen and (max-height: 500px) and (orientation: landscape) {
   .hero-section {
     padding: 40px 20px;
   }
-  
+
   .section-image-container {
     height: 300px;
   }
-  
+
   .sections {
     gap: 20px;
     padding: 20px;

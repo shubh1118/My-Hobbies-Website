@@ -1,8 +1,8 @@
 .coding-container {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
   background: linear-gradient(to bottom, #f8fafc, #ffffff);
   min-height: 100vh;
 }
@@ -20,7 +20,7 @@
 }
 
 .coding-container h1::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -10px;
   left: 50%;
@@ -42,14 +42,13 @@
 }
 
 .coding-container h2::before {
-  content: '';
+  content: "";
   display: inline-block;
   width: 4px;
   height: 24px;
   background: linear-gradient(to bottom, #4299e1, #667eea);
   border-radius: 2px;
 }
-
 
 .projects {
   display: grid;
@@ -70,7 +69,7 @@
 }
 
 .project-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -124,7 +123,6 @@
   transform: translateX(4px);
 }
 
-
 .blogs {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -143,7 +141,7 @@
 }
 
 .blog-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -201,7 +199,6 @@
   transform: translateX(4px);
 }
 
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -213,7 +210,8 @@
   }
 }
 
-.project-card, .blog-card {
+.project-card,
+.blog-card {
   animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   opacity: 0;
 }
@@ -234,7 +232,6 @@
   animation-delay: 0.4s;
 }
 
-
 @media (max-width: 768px) {
   .coding-container {
     padding: 1.5rem;
@@ -248,36 +245,41 @@
     font-size: 1.8rem;
   }
 
-  .projects, .blogs {
+  .projects,
+  .blogs {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
-  .project-card, .blog-card {
+  .project-card,
+  .blog-card {
     padding: 1.5rem;
   }
 }
-
 
 @media (prefers-color-scheme: dark) {
   .coding-container {
     background: linear-gradient(to bottom, #1a202c, #2d3748);
   }
 
-  .project-card, .blog-card {
+  .project-card,
+  .blog-card {
     background: #2d3748;
     border-color: rgba(255, 255, 255, 0.1);
   }
 
-  .project-card h3, .blog-card h3 {
+  .project-card h3,
+  .blog-card h3 {
     color: #e2e8f0;
   }
 
-  .project-card p, .blog-card p {
+  .project-card p,
+  .blog-card p {
     color: #a0aec0;
   }
 
-  .project-card a, .blog-card a {
+  .project-card a,
+  .blog-card a {
     background: rgba(66, 153, 225, 0.2);
   }
 }

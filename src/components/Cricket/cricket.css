@@ -1,0 +1,148 @@
+.cricket-container {
+  width: 100vw;
+  min-height: 100vh;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  background-image: url("../../Assets/stadium.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cricket-header {
+  text-align: center;
+  color: #1a237e;
+  margin-top: 2rem;
+}
+
+.cricket-header h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  background: linear-gradient(45deg, #1a237e, #0d47a1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: #666;
+}
+
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 1.5rem auto;
+  padding: 0;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.player-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  min-height: 160px;
+}
+
+.player-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.player-info {
+  flex-grow: 1;
+  padding: 0.3rem 0;
+}
+
+.player-info h2 {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  background: linear-gradient(45deg, #2c3e50, #3498db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.2rem;
+}
+
+.player-role {
+  display: inline-block;
+  background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+  color: white;
+  padding: 0.2rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+
+.achievements {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(78, 205, 196, 0.2);
+}
+
+.achievements h3 {
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.achievements ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.achievements li {
+  padding: 0.2rem 0;
+  font-size: 0.85rem;
+  color: #555;
+  transition: transform 0.2s ease;
+}
+
+.achievements li:hover {
+  transform: translateX(5px);
+  color: #4ecdc4;
+}
+
+@media (max-width: 1024px) {
+  .players-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cricket-container {
+    background-size: cover;
+  }
+
+  .players-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .player-card {
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .players-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .player-card {
+    max-width: 100%;
+    margin: 0 auto;
+    min-height: 140px;
+  }
+}
