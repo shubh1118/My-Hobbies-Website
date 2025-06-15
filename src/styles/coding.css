@@ -50,7 +50,7 @@
   border-radius: 2px;
 }
 
-/* Projects Section */
+
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -124,7 +124,7 @@
   transform: translateX(4px);
 }
 
-/* Blogs Section */
+
 .blogs {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -201,7 +201,7 @@
   transform: translateX(4px);
 }
 
-/* Loading Animation */
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -234,7 +234,7 @@
   animation-delay: 0.4s;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .coding-container {
     padding: 1.5rem;
@@ -258,7 +258,7 @@
   }
 }
 
-/* Dark mode support */
+
 @media (prefers-color-scheme: dark) {
   .coding-container {
     background: linear-gradient(to bottom, #1a202c, #2d3748);

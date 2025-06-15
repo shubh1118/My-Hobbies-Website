@@ -195,7 +195,7 @@ body {
   }
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.5rem;
@@ -223,7 +223,7 @@ body {
   }
 }
 
-/* Responsive Styles */
+
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .sections {
     padding: 30px;
@@ -244,7 +244,7 @@ body {
   }
 }
 
-/* Landscape mode adjustments */
+
 @media screen and (max-height: 500px) and (orientation: landscape) {
   .hero-section {
     padding: 40px 20px;

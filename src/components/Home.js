@@ -20,7 +20,7 @@ function Home() {
     <div className="home">
       <div className="hero-section">
         <div className="hero-content">
-          <h1 className="hero-title">Portfolio & Creative Showcase</h1>
+          <h1 className="hero-title">My Hobbies & Creative Showcase</h1>
           <p className="hero-subtitle">Crafting Excellence Through Diverse Passions</p>
           <div className="hero-description">
             Discover a curated collection of professional endeavors and creative expressions. 

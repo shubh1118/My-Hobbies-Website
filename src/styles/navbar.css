@@ -1,13 +1,13 @@
 .navbar {
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   padding: 0.5rem 2rem;
-  position: fixed;
+  position: static;
   width: 100%;
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  height: 80px;
+  height: 70px;
 }
 
 .navbar.scrolled {
@@ -142,7 +142,7 @@
   }
 }
 
-/* Animation for menu items */
+
 @keyframes slideIn {
   from {
     opacity: 0;

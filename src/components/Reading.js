@@ -2,10 +2,8 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import "../styles/Reading.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaSearch, FaBookmark, FaBookOpen, FaFilter, FaSpinner } from "react-icons/fa";
+import { FaBookmark, FaBookOpen, FaFilter, FaSpinner } from "react-icons/fa";
 
-// Constants
 const API_BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 const ITEMS_PER_PAGE = 12;
 const CATEGORIES = [
@@ -14,7 +12,7 @@ const CATEGORIES = [
   "Science",
   "History",
   "Biography",
-  "Technology"
+  "Technology",
 ];
 
 function Reading() {
@@ -23,18 +21,21 @@ function Reading() {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Programming");
   const [bookmarks, setBookmarks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
   const [showFilters, setShowFilters] = useState(false);
   const [isBookmarking, setIsBookmarking] = useState(false);
 
-  // Memoized values
-  const totalPages = useMemo(() => Math.ceil(totalItems / ITEMS_PER_PAGE), [totalItems]);
-  const isBookmarked = useCallback((bookId) => bookmarks.some(b => b.id === bookId), [bookmarks]);
+  const totalPages = useMemo(
+    () => Math.ceil(totalItems / ITEMS_PER_PAGE),
+    [totalItems]
+  );
+  const isBookmarked = useCallback(
+    (bookId) => bookmarks.some((b) => b.id === bookId),
+    [bookmarks]
+  );
 
-  // Load bookmarks from localStorage
   useEffect(() => {
     const savedBookmarks = localStorage.getItem("bookmarks");
     if (savedBookmarks) {
@@ -46,76 +47,78 @@ function Reading() {
     }
   }, []);
 
-  // Fetch books
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-        const query = searchQuery.trim() || selectedCategory.toLowerCase();
-        
-        if (!query) {
-          setError("Please enter a search term or select a category");
-          return;
-        }
+        const query = selectedCategory.toLowerCase();
 
         const response = await axios.get(
-          `${API_BASE_URL}?q=${encodeURIComponent(query)}&startIndex=${startIndex}&maxResults=${ITEMS_PER_PAGE}`
+          `${API_BASE_URL}?q=${encodeURIComponent(
+            query
+          )}&startIndex=${startIndex}&maxResults=${ITEMS_PER_PAGE}`
         );
-        
+
         if (!response.data.items) {
-          setError("No books found. Try a different search term or category.");
+          setError("No books found. Try a different category.");
+          setLoading(false);
           return;
         }
 
         setBooks(response.data.items);
         setTotalItems(response.data.totalItems || 0);
       } catch (error) {
-        setError(error.response?.status === 429 
-          ? "Too many requests. Please try again later."
-          : "Failed to fetch books. Please try again later.");
+        console.error("Error fetching books:", error);
+        if (error.response) {
+          setError(
+            `Error: ${error.response.status} - ${error.response.statusText}`
+          );
+        } else if (error.request) {
+          setError(
+            "No response from server. Please check your internet connection."
+          );
+        } else {
+          setError("An unexpected error occurred. Please try again.");
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchBooks();
-  }, [currentPage, searchQuery, selectedCategory]);
+  }, [currentPage, selectedCategory]);
 
-  const handlePageChange = useCallback((newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-    }
-  }, [totalPages]);
+  const handlePageChange = useCallback(
+    (newPage) => {
+      if (newPage >= 1 && newPage <= totalPages) {
+        setCurrentPage(newPage);
+      }
+    },
+    [totalPages]
+  );
 
-  const toggleBookmark = useCallback(async (book) => {
-    try {
-      setIsBookmarking(true);
-      const newBookmarks = isBookmarked(book.id)
-        ? bookmarks.filter(b => b.id !== book.id)
-        : [...bookmarks, book];
-      
-      setBookmarks(newBookmarks);
-      localStorage.setItem("bookmarks", JSON.stringify(newBookmarks));
-    } catch (error) {
-      setError("Failed to save bookmark. Please try again.");
-    } finally {
-      setIsBookmarking(false);
-    }
-  }, [bookmarks, isBookmarked]);
+  const toggleBookmark = useCallback(
+    async (book) => {
+      try {
+        setIsBookmarking(true);
+        const newBookmarks = isBookmarked(book.id)
+          ? bookmarks.filter((b) => b.id !== book.id)
+          : [...bookmarks, book];
 
-  const handleSearch = useCallback((e) => {
-    e.preventDefault();
-    if (!searchQuery.trim()) {
-      setError("Please enter a search term");
-      return;
-    }
-    setCurrentPage(1);
-  }, [searchQuery]);
+        setBookmarks(newBookmarks);
+        localStorage.setItem("bookmarks", JSON.stringify(newBookmarks));
+      } catch (error) {
+        setError("Failed to save bookmark. Please try again.");
+      } finally {
+        setIsBookmarking(false);
+      }
+    },
+    [bookmarks, isBookmarked]
+  );
 
-  // Loading skeleton component
   const LoadingSkeleton = () => (
     <div className="books-grid">
       {[...Array(ITEMS_PER_PAGE)].map((_, index) => (
@@ -134,6 +137,10 @@ function Reading() {
   if (loading) {
     return (
       <div className="reading-container">
+        <div className="loading-spinner">
+          <FaSpinner className="spinner-icon" />
+          <p>Loading books...</p>
+        </div>
         <LoadingSkeleton />
       </div>
     );
@@ -142,128 +149,88 @@ function Reading() {
   if (error) {
     return (
       <div className="reading-container error-container">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="error-message"
-        >
+        <div className="error-message">
           <h2>Oops! Something went wrong</h2>
           <p>{error}</p>
-          <button 
-            onClick={() => setCurrentPage(1)} 
-            className="retry-button"
-          >
+          <button onClick={() => setCurrentPage(1)} className="retry-button">
             Try Again
           </button>
-        </motion.div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="reading-container">
-      <motion.h1 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="page-title"
-      >
-        📚 Discover Your Next Read
-      </motion.h1>
+      <h1 className="page-title">📚 Discover Your Next Read</h1>
 
       <div className="search-filter-section">
-        <form onSubmit={handleSearch} className="search-form">
-          <div className="search-input-wrapper">
-            <FaSearch className="search-icon" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search for books..."
-              className="search-input"
-            />
-          </div>
-          <button type="submit" className="search-button">
-            Search
-          </button>
-        </form>
-
-        <button 
+        <button
           className="filter-toggle"
           onClick={() => setShowFilters(!showFilters)}
         >
-          <FaFilter /> {showFilters ? 'Hide Filters' : 'Show Filters'}
+          <FaFilter /> {showFilters ? "Hide Filters" : "Show Filters"}
         </button>
 
-        <AnimatePresence>
-          {showFilters && (
-            <motion.div 
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="categories"
-            >
-              {CATEGORIES.map((category) => (
-                <button
-                  key={category}
-                  className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
-                  onClick={() => setSelectedCategory(category)}
-                >
-                  {category}
-                </button>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {showFilters && (
+          <div className="categories">
+            {CATEGORIES.map((category) => (
+              <button
+                key={category}
+                className={`category-btn ${
+                  selectedCategory === category ? "active" : ""
+                }`}
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
-      <motion.div 
-        layout
-        className="books-grid"
-      >
-        <AnimatePresence>
-          {books.map((book) => (
-            <motion.div
-              key={book.id}
-              layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              whileHover={{ scale: 1.05 }}
-              className="book-card"
-            >
-              <div className="book-cover-container">
-                <img 
-                  src={book.volumeInfo.imageLinks?.thumbnail || '/placeholder-book-cover.png'} 
-                  alt={`Cover of ${book.volumeInfo.title}`}
-                  className="book-cover"
-                  onError={(e) => {
-                    e.target.src = '/placeholder-book-cover.png';
-                  }}
-                />
+      <div className="books-grid">
+        {books.map((book) => (
+          <div key={book.id} className="book-card">
+            <div className="book-cover-container">
+              <img
+                src={
+                  book.volumeInfo.imageLinks?.thumbnail ||
+                  "/placeholder-book-cover.png"
+                }
+                alt={`Cover of ${book.volumeInfo.title}`}
+                className="book-cover"
+                onError={(e) => {
+                  e.target.src = "/placeholder-book-cover.png";
+                }}
+              />
+            </div>
+            <div className="book-info">
+              <h3>{book.volumeInfo.title}</h3>
+              <p className="author">
+                {book.volumeInfo.authors?.join(", ") || "Unknown Author"}
+              </p>
+              <div className="book-actions">
+                <button
+                  className="action-btn view"
+                  onClick={() => setSelectedBook(book)}
+                >
+                  <FaBookOpen /> View
+                </button>
+                <button
+                  className={`action-btn bookmark ${
+                    isBookmarked(book.id) ? "active" : ""
+                  }`}
+                  onClick={() => toggleBookmark(book)}
+                  disabled={isBookmarking}
+                >
+                  <FaBookmark /> {isBookmarked(book.id) ? "Saved" : "Save"}
+                </button>
               </div>
-              <div className="book-info">
-                <h3>{book.volumeInfo.title}</h3>
-                <p className="author">{book.volumeInfo.authors?.join(", ") || "Unknown Author"}</p>
-                <div className="book-actions">
-                  <button 
-                    className="action-btn view"
-                    onClick={() => setSelectedBook(book)}
-                  >
-                    <FaBookOpen /> View
-                  </button>
-                  <button 
-                    className={`action-btn bookmark ${isBookmarked(book.id) ? 'active' : ''}`}
-                    onClick={() => toggleBookmark(book)}
-                    disabled={isBookmarking}
-                  >
-                    <FaBookmark /> {isBookmarked(book.id) ? 'Saved' : 'Save'}
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </motion.div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <div className="pagination">
         <button
@@ -273,7 +240,9 @@ function Reading() {
         >
           Previous
         </button>
-        <span className="page-info">Page {currentPage} of {totalPages}</span>
+        <span className="page-info">
+          Page {currentPage} of {totalPages}
+        </span>
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
@@ -283,76 +252,72 @@ function Reading() {
         </button>
       </div>
 
-      <AnimatePresence>
-        {selectedBook && (
-          <motion.div 
-            className="modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedBook(null)}
-          >
-            <motion.div 
-              className="modal-content"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              onClick={e => e.stopPropagation()}
+      {selectedBook && (
+        <div className="modal-overlay" onClick={() => setSelectedBook(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="close-modal"
+              onClick={() => setSelectedBook(null)}
             >
-              <button 
-                className="close-modal" 
-                onClick={() => setSelectedBook(null)}
-              >
-                ×
-              </button>
-              <div className="modal-body">
-                <img 
-                  src={selectedBook.volumeInfo.imageLinks?.thumbnail || '/placeholder-book-cover.png'} 
-                  alt={`Cover of ${selectedBook.volumeInfo.title}`}
-                  className="modal-book-cover"
-                  onError={(e) => {
-                    e.target.src = '/placeholder-book-cover.png';
-                  }}
-                />
-                <div className="modal-book-info">
-                  <h2>{selectedBook.volumeInfo.title}</h2>
-                  <p className="author">{selectedBook.volumeInfo.authors?.join(", ") || "Unknown Author"}</p>
-                  <p className="published-date">Published: {selectedBook.volumeInfo.publishedDate || "Unknown"}</p>
-                  <p className="publisher">Publisher: {selectedBook.volumeInfo.publisher || "Unknown"}</p>
-                  <p className="pages">Pages: {selectedBook.volumeInfo.pageCount || "Unknown"}</p>
-                  <p className="description">{selectedBook.volumeInfo.description || "No description available."}</p>
-                  <div className="modal-actions">
-                    <a 
-                      href={selectedBook.volumeInfo.previewLink} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="preview-btn"
-                    >
-                      Preview Book
-                    </a>
-                    <button 
-                      className={`bookmark-btn ${isBookmarked(selectedBook.id) ? 'active' : ''}`}
-                      onClick={() => toggleBookmark(selectedBook)}
-                      disabled={isBookmarking}
-                    >
-                      <FaBookmark /> {isBookmarked(selectedBook.id) ? 'Saved' : 'Save'}
-                    </button>
-                  </div>
+              ×
+            </button>
+            <div className="modal-body">
+              <img
+                src={
+                  selectedBook.volumeInfo.imageLinks?.thumbnail ||
+                  "/placeholder-book-cover.png"
+                }
+                alt={`Cover of ${selectedBook.volumeInfo.title}`}
+                className="modal-book-cover"
+                onError={(e) => {
+                  e.target.src = "/placeholder-book-cover.png";
+                }}
+              />
+              <div className="modal-book-info">
+                <h2>{selectedBook.volumeInfo.title}</h2>
+                <p className="author">
+                  {selectedBook.volumeInfo.authors?.join(", ") ||
+                    "Unknown Author"}
+                </p>
+                <p className="published-date">
+                  Published:{" "}
+                  {selectedBook.volumeInfo.publishedDate || "Unknown"}
+                </p>
+                <p className="publisher">
+                  Publisher: {selectedBook.volumeInfo.publisher || "Unknown"}
+                </p>
+                <p className="pages">
+                  Pages: {selectedBook.volumeInfo.pageCount || "Unknown"}
+                </p>
+                <p className="description">
+                  {selectedBook.volumeInfo.description ||
+                    "No description available."}
+                </p>
+                <div className="modal-actions">
+                  <a
+                    href={selectedBook.volumeInfo.previewLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="preview-btn"
+                  >
+                    Preview Book
+                  </a>
+                  <button
+                    className={`bookmark-btn ${
+                      isBookmarked(selectedBook.id) ? "active" : ""
+                    }`}
+                    onClick={() => toggleBookmark(selectedBook)}
+                    disabled={isBookmarking}
+                  >
+                    <FaBookmark />{" "}
+                    {isBookmarked(selectedBook.id) ? "Saved" : "Save"}
+                  </button>
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <Link to="/" className="back-home">
-        <motion.span
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          🏠 Back to Home
-        </motion.span>
-      </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

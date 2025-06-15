@@ -5,7 +5,6 @@ import Coding from "./components/Coding";
 import Cricket from "./components/Cricket";
 import Paint from "./components/Paint";
 import Reading from "./components/Reading";
-import Footer from "./components/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -13,6 +12,7 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/coding" element={<Coding />} />
@@ -20,7 +20,6 @@ function App() {
           <Route path="/paint" element={<Paint />} />
           <Route path="/reading" element={<Reading />} />
         </Routes>
-        {/* <Footer /> */}
       </div>
     </Router>
   );

@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 5 * 60 * 1000;
 let cachedBlogs = null;
 let lastFetchTime = null;
 
 export const fetchBlogs = async () => {
-  // Return cached data if it's still valid
+  
   if (cachedBlogs && lastFetchTime && (Date.now() - lastFetchTime < CACHE_DURATION)) {
     return { data: cachedBlogs, error: null };
   }

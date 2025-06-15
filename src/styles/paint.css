@@ -8,13 +8,15 @@
 .gallery-header {
   text-align: center;
   margin-bottom: 2rem;
+  padding: 0 1rem;
 }
 
 .gallery-header h1 {
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   color: #2c3e50;
   margin-bottom: 1.5rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  line-height: 1.2;
 }
 
 .gallery-layout {
@@ -347,5 +349,23 @@
 
   .paintings-vertical {
     grid-template-columns: 1fr;
+  }
+
+  .gallery-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .gallery-header h1 {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-header {
+    margin-bottom: 1rem;
+  }
+  
+  .gallery-header h1 {
+    font-size: 2rem;
   }
 }
