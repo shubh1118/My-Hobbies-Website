@@ -215,7 +215,10 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   margin: 1rem 0 ;
-  margin-top: 4%;
+  position:relative;
+  top: 15px;
+  left: 45px;
+  
 }
 
 .pagination button {
