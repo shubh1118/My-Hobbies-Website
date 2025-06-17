@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import "./paint.css";
 import axios from "axios";
+import FallbackLoader from "../Loaders/FallbackLoader";
 
 const API_BASE_URL = "https://api.artic.edu/api/v1/artworks/search";
 const ITEMS_PER_PAGE = 15;
@@ -179,9 +180,8 @@ function Painting() {
 
   if (loading && paintings.length === 0) {
     return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
-        <p>Loading masterpieces...</p>
+      <div >
+        <FallbackLoader title="Loading masterpieces..." />
       </div>
     );
   }

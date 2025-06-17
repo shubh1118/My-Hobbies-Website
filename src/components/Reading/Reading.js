@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import "./Reading.css";
 import axios from "axios";
-import { FaBookmark, FaBookOpen,FaSpinner } from "react-icons/fa";
+import { FaBookmark, FaBookOpen, FaSpinner } from "react-icons/fa";
+import FallbackLoader from "../Loaders/FallbackLoader";
 
 const API_BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 const ITEMS_PER_PAGE = 12;
@@ -23,7 +24,6 @@ function Reading() {
   const [selectedCategory, setSelectedCategory] = useState("Programming");
   const [bookmarks, setBookmarks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
-  const [showFilters, setShowFilters] = useState(false);
   const [isBookmarking, setIsBookmarking] = useState(false);
 
   const totalPages = useMemo(
@@ -136,10 +136,7 @@ function Reading() {
   if (loading) {
     return (
       <div className="reading-container">
-        <div className="loading-spinner">
-          <FaSpinner className="spinner-icon" />
-          <p>Loading books...</p>
-        </div>
+        <FallbackLoader/>
         <LoadingSkeleton />
       </div>
     );
@@ -183,21 +180,19 @@ function Reading() {
       <h1 className="page-title">📚 Discover Your Next Read</h1>
 
       <div className="search-filter-section">
-        {showFilters && (
-          <div className="categories">
-            {CATEGORIES.map((category) => (
-              <button
-                key={category}
-                className={`category-btn ${
-                  selectedCategory === category ? "active" : ""
-                }`}
-                onClick={() => setSelectedCategory(category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        )}
+        <div className="categories">
+          {CATEGORIES.map((category) => (
+            <button
+              key={category}
+              className={`category-btn ${
+                selectedCategory === category ? "active" : ""
+              }`}
+              onClick={() => setSelectedCategory(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="books-grid">

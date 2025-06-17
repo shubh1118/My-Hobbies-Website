@@ -12,7 +12,7 @@ export const sectionData = [
     description:
       "Exploring the digital frontier through elegant solutions and innovative projects",
   },
-  {
+  { 
     path: "/cricket",
     image: cricketImage,
     alt: "Cricket",
