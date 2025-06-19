@@ -2,9 +2,9 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import "./paint.css";
 import axios from "axios";
 import FallbackLoader from "../Loaders/FallbackLoader";
-import PaintingCard from "../WithPaint/PaintingCard";
-import PaintingModal from "../WithPaint/PaintingModal";
-import Pagination from "../WithPaint/Pagination";
+import PaintingCard from "../Hobbies/Paint/PaintingCard";
+import PaintingModal from "../Hobbies/Paint/PaintingModal";
+import Pagination from "../Hobbies/Paint/Pagination";
 
 const API_BASE_URL = "https://api.artic.edu/api/v1/artworks/search";
 const ITEMS_PER_PAGE = 15;

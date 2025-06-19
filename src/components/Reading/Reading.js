@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import axios from "axios";
 import FallbackLoader from "../Loaders/FallbackLoader";
-import BookList from "../WithReading/BookList";
-import Pagination from "../WithReading/Pagination";
-import BookModal from "../WithReading/BookModal";
-import CategorySelector from "../WithReading/CategorySelector";
+import BookList from "../Hobbies/Reading/BookList";
+import Pagination from "../Hobbies/Reading/Pagination";
+import BookModal from "../Hobbies/Reading/BookModal";
+import CategorySelector from "../Hobbies/Reading/CategorySelector";
 import "./Reading.css";
 
 const ITEMS_PER_PAGE = 12;
