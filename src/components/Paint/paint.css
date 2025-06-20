@@ -3,6 +3,7 @@
   padding: 2rem;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .gallery-header {
@@ -188,16 +189,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: nowrap;
+ flex-wrap: nowrap !important;
   gap: 0.5rem;
-  margin: 2rem 0;
+  margin: 2rem auto;
   overflow-x: auto;
   white-space: nowrap;
   padding: 0.5rem;
   scrollbar-width: none;
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
+  
 }
 
 .pagination::-webkit-scrollbar {
