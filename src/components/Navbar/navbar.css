@@ -1,7 +1,7 @@
 .navbar {
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   padding: 0.5rem 2rem;
-  position: static;
+  position: relative; 
   width: 100%;
   top: 0;
   z-index: 1000;
@@ -98,16 +98,13 @@
   color: #61dafb;
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
 .nav-link.active {
   color: #61dafb;
-}
-
-.nav-link.active::after {
-  width: 100%;
 }
 
 @media screen and (max-width: 768px) {
@@ -116,21 +113,23 @@
   }
 
   .nav-menu {
-    position: fixed;
-    top: 70px;
-    left: -100%;
-    flex-direction: column;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    position: absolute; 
+    top: 100%; 
+    left: 0;
     width: 100%;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    flex-direction: column;
     text-align: center;
-    transition: 0.3s;
+    transition: left 0.3s ease;
     box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
     padding: 2rem 0;
     gap: 1.5rem;
+    z-index: 999;
+    display: none;
   }
 
   .nav-menu.active {
-    left: 0;
+    display: flex;
   }
 
   .nav-item {
